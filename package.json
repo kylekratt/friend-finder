@@ -1,0 +1,24 @@
+{
+  "name": "friend-finder",
+  "version": "1.0.0",
+  "description": "Helps find friends based on common interests.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kylekratt/friend-finder.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kylekratt/friend-finder/issues"
+  },
+  "homepage": "https://github.com/kylekratt/friend-finder#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "path": "^0.12.7"
+  }
+}

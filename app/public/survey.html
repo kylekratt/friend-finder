@@ -1,0 +1,172 @@
+<!doctype HTML>
+
+<head>
+    <title>Friend Finder</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="display-2">FF Survey</h1>
+        <label class="h5" for="name">Name</label>
+        <form>
+            <div class="input-group">
+                <input class="form-control mb-3" id="name">
+            </div>
+            <label class="h5" for="picture">Photo Link</label>
+            <div class="input-group">
+                <input class="form-control mb-3" id="picture">
+            </div>
+            <br>
+            <h3>Question 1</h3>
+            <p>How much do you like pizza?</p>
+            <select id="q1" class="custom-select mb-3">
+                <option value="1">1 (Not much)</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5 (Very much)</option>
+            </select>
+            <h3>Question 2</h3>
+            <p>How much do you like cheesburgers?</p>
+            <select id="q2" class="custom-select mb-3">
+                <option value="1">1 (Not much)</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5 (Very much)</option>
+            </select>
+            <h3>Question 3</h3>
+            <p>How much do you like waffles?</p>
+            <select id="q3" class="custom-select mb-3">
+                <option value="1">1 (Not much)</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5 (Very much)</option>
+            </select>
+            <h3>Question 4</h3>
+            <p>How much do you like pancakes?</p>
+            <select id="q4" class="custom-select mb-3">
+                <option value="1">1 (Not much)</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5 (Very much)</option>
+            </select>
+            <h3>Question 5</h3>
+            <p>How much do you like turkey?</p>
+            <select id="q5" class="custom-select mb-3">
+                <option value="1">1 (Not much)</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5 (Very much)</option>
+            </select>
+            <h3>Question 6</h3>
+            <p>How much do you like chocolate?</p>
+            <select id="q6" class="custom-select mb-3">
+                <option value="1">1 (Not much)</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5 (Very much)</option>
+            </select>
+            <h3>Question 7</h3>
+            <p>How much do you like ice cream?</p>
+            <select id="q7" class="custom-select mb-3">
+                <option value="1">1 (Not much)</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5 (Very much)</option>
+            </select>
+            <h3>Question 8</h3>
+            <p>How much do you like steak?</p>
+            <select id="q8" class="custom-select mb-3">
+                <option value="1">1 (Not much)</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5 (Very much)</option>
+            </select>
+            <h3>Question 9</h3>
+            <p>How much do you like tacos?</p>
+            <select id="q9" class="custom-select mb-3">
+                <option value="1">1 (Not much)</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5 (Very much)</option>
+            </select>
+            <h3>Question 10</h3>
+            <p>How much do you like sushi?</p>
+            <select id="q10" class="custom-select mb-3">
+                <option value="1">1 (Not much)</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5 (Very much)</option>
+            </select>
+            <button class="btn btn-lrg btn-primary">Submit</button>
+        </form>
+    </div>
+    <div id="results-modal" class="modal fade" role="dialog" style="display:none">
+        <div class="modal-dialog">
+            <h2 class="modal-header">BFF</h2>
+            <div class="modal-body">
+                <h2 id="match-name"></h2>
+                <img id="match-img">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $("#submit").on("click", function(event) {
+          event.preventDefault();
+    
+          function validateForm() {
+            var isValid = true;
+            $(".form-control").each(function() {
+              if ($(this).val() === "") {
+                isValid = false;
+              }
+            });
+            return isValid;
+          }
+    
+          if (validateForm()) {
+            var userData = {
+              name: $("#name").val(),
+              photo: $("#photo").val(),
+              scores: [
+                $("#q1").val(),
+                $("#q2").val(),
+                $("#q3").val(),
+                $("#q4").val(),
+                $("#q5").val(),
+                $("#q6").val(),
+                $("#q7").val(),
+                $("#q8").val(),
+                $("#q9").val(),
+                $("#q10").val()
+              ]
+            };
+    
+            $.post("/api/friends", userData, function(data) {
+
+              $("#match-name").text(data.name);
+              $("#match-img").attr("src", data.photo);
+    
+              // Show the modal with the best match
+              $("#results-modal").modal("toggle");
+    
+            });
+          } else {
+            alert("Please fill out all fields before submitting!");
+          }
+        });
+      </script>
+</body>
